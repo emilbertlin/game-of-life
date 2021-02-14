@@ -66,40 +66,47 @@ const App = () => {
   }, []);
 
   return (
-    <>
-      <button
-        onClick={() => {
-          setRunning(!running);
-          if (!running) {
-            runningRef.current = true;
-            runSimulation();
-          }
-        }}
-      >
-        {running ? "stop" : "start"}
-      </button>
-      <button
-        onClick={() => {
-          const rows = [];
-          for (let i = 0; i < numRows; i++) {
-            rows.push(
-              Array.from(Array(numCols), () => (Math.random() > 0.83 ? 1 : 0))
-            );
-          }
+    <div style={container}>
+      <div>
+        <button
+          style={btnStyle}
+          onClick={() => {
+            setRunning(!running);
+            if (!running) {
+              runningRef.current = true;
+              runSimulation();
+            }
+          }}
+        >
+          {running ? "stop" : "start"}
+        </button>
+        <button
+          style={btnStyle}
+          onClick={() => {
+            const rows = [];
+            for (let i = 0; i < numRows; i++) {
+              rows.push(
+                Array.from(Array(numCols), () => (Math.random() > 0.85 ? 1 : 0))
+              );
+            }
 
-          setGrid(rows);
-        }}
-      >
-        random
-      </button>
-      <button
-        onClick={() => {
-          setGrid(generateEmptyGrid());
-          setRunning(!running)
-        }}
-      >
-        clear
-      </button>
+            setGrid(rows);
+          }}
+        >
+          random
+        </button>
+        <button
+          style={btnStyle}
+          onClick={() => {
+            setGrid(generateEmptyGrid());
+            if(running) {
+              setRunning(!running)
+            }
+          }}
+        >
+          clear
+        </button>
+      </div>
       <div
         style={{
           display: "grid",
@@ -119,15 +126,30 @@ const App = () => {
               style={{
                 width: 20,
                 height: 20,
-                backgroundColor: grid[i][k] ? "black" : undefined,
-                border: '1px solid rgba(52, 52, 52, 0.4)'
+                backgroundColor: grid[i][k] ? "white" : undefined,
+                border: '1px solid rgba(255, 255, 255, 0.2)'
               }}
             />
           ))
         )}
       </div>
-    </>
+    </div>
   );
 };
+
+const container = {
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  background: 'rgb(2,0,36)',
+}
+
+const btnStyle = {
+  background: '#111',
+  color: 'white',
+  fontSize: '18px',
+  padding: '0.5rem 1rem'
+}
 
 export default App
